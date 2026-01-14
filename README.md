@@ -70,6 +70,34 @@ npm run format:check
 
 # プレビュー
 npm run preview
+
+# Storybook起動
+npm run storybook
+
+# Storybookビルド
+npm run build-storybook
+```
+
+## Storybook
+
+コンポーネントのカタログ・ドキュメントとして Storybook を導入しています。
+
+### 起動方法
+
+```bash
+npm run storybook
+```
+
+http://localhost:6006 でStorybookが起動します。
+
+### Storyファイルの作成
+
+コンポーネントと同じディレクトリに `*.stories.tsx` ファイルを作成してください。
+
+```
+src/components/
+├── Button.tsx
+└── Button.stories.tsx
 ```
 
 ## 環境変数
