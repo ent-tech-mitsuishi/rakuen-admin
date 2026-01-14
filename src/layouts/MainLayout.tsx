@@ -24,11 +24,8 @@ export function MainLayout() {
           ラクエン
         </h2>
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-          <NavLink to="/" style={navLinkStyle}>
+          <NavLink to="/admin" end style={navLinkStyle}>
             ダッシュボード
-          </NavLink>
-          <NavLink to="/influencers" style={navLinkStyle}>
-            インフルエンサー
           </NavLink>
         </nav>
       </aside>
