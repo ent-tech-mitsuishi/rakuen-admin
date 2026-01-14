@@ -10,8 +10,8 @@ else
     sed -i 's/auth_basic/#auth_basic/g' /etc/nginx/conf.d/default.conf
 fi
 
-# nginx.confの$PORTを実際のポートに置換
-sed -i "s/\$PORT/${PORT:-3000}/g" /etc/nginx/conf.d/default.conf
+# nginx.confの__PORT__を実際のポートに置換
+sed -i "s/__PORT__/${PORT:-3000}/g" /etc/nginx/conf.d/default.conf
 
 # nginxを起動
 exec nginx -g "daemon off;"
