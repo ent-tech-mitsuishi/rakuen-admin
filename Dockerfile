@@ -1,4 +1,5 @@
-FROM node:20-alpine
+# ビルドステージ
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -8,9 +9,22 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-RUN npm install -g serve
+# 本番ステージ
+FROM nginx:alpine
 
-ENV PORT=3000
+# htpasswdコマンドのためにapache2-utilsをインストール
+RUN apk add --no-cache apache2-utils
+
+# ビルド成果物をコピー
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# nginx設定をコピー
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# 起動スクリプトをコピー
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 3000
 
-CMD sh -c "serve -s dist -l \$PORT"
+ENTRYPOINT ["/entrypoint.sh"]
