@@ -8,6 +8,7 @@
 - TypeScript 5.6
 - Vite 5
 - Docker
+- nginx (本番環境)
 
 ## ディレクトリ構成
 
@@ -24,27 +25,34 @@ rakuen-admin/
 ├── vite.config.ts       # Vite設定
 ├── eslint.config.js     # ESLint設定
 ├── .prettierrc          # Prettier設定
-├── Dockerfile           # Dockerイメージ定義
-└── docker-compose.yml   # Docker Compose設定
+├── Dockerfile           # 本番用Dockerイメージ定義
+├── docker-compose.yml   # ローカル開発用Docker Compose設定
+├── nginx.conf           # nginx設定（ベーシック認証含む）
+├── entrypoint.sh        # コンテナ起動スクリプト
+└── railway.toml         # Railway設定
 ```
 
-## 起動方法
+## ローカル開発
 
 ### 前提条件
 
-rakuen-api が起動していること（共有ネットワーク `rakuen-network` が必要）
+rakuen-api が起動していること
 
-### Docker（推奨）
-
-```bash
-docker compose up --build -d
-```
-
-### ローカル
+### 起動方法
 
 ```bash
 npm install
 npm run dev
+```
+
+http://localhost:5173 で起動します。
+
+### 環境変数の設定
+
+`.env.development` ファイルを作成してください：
+
+```bash
+VITE_API_URL=http://localhost:8080
 ```
 
 ## 開発コマンド
@@ -100,6 +108,64 @@ src/components/
 └── Button.stories.tsx
 ```
 
+## デプロイ (Railway)
+
+GitHub + Railway のCI/CDパイプラインでデプロイされます。
+
+### アーキテクチャ
+
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│  rakuen-admin   │────▶│   rakuen-api    │────▶│   PostgreSQL    │
+│   (React/nginx) │     │   (Go/Gin)      │     │                 │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
+
+### 本番URL
+
+| サービス | URL |
+|---------|-----|
+| Admin | https://rakuen-admin-production.up.railway.app |
+| API | https://rakuen-api-production.up.railway.app |
+
+### Railway環境変数
+
+| 変数名 | 説明 | 例 |
+|--------|------|-----|
+| VITE_API_URL | APIのベースURL | https://rakuen-api-production.up.railway.app |
+| BASIC_AUTH_USER | ベーシック認証ユーザー名 | admin |
+| BASIC_AUTH_PASS | ベーシック認証パスワード | (任意のパスワード) |
+
+### デプロイの流れ
+
+1. `main` ブランチにプッシュ
+2. Railwayが自動でビルド・デプロイ
+3. ヘルスチェック（`/health`）が通れば公開
+
+### ベーシック認証
+
+本番環境ではnginxによるベーシック認証が有効です。
+
+- `/health` エンドポイントのみ認証なしでアクセス可能（ヘルスチェック用）
+- その他のすべてのパスは認証が必要
+
+### トラブルシューティング
+
+#### ビルドが失敗する
+
+- `package-lock.json` がコミットされているか確認
+- Railway の「Deployments」タブでログを確認
+
+#### API接続エラー（Failed to fetch）
+
+- `VITE_API_URL` がRailwayに設定されているか確認
+- 設定後、再デプロイが必要（Vite環境変数はビルド時に埋め込まれる）
+
+#### ヘルスチェックが失敗する
+
+- `PORT` 環境変数がnginxで正しく使われているか確認
+- ベーシック認証が `/health` で無効になっているか確認
+
 ## 環境変数
 
 | 変数名 | 説明 | デフォルト値 |
@@ -108,11 +174,7 @@ src/components/
 
 ## ポート
 
-| サービス | ポート |
-|---------|--------|
-| Admin | 5173 |
-
-## ネットワーク
-
-このサービスは `rakuen-network` という外部ネットワークに接続します。
-先に `rakuen-api` を起動してネットワークを作成してください。
+| 環境 | ポート |
+|------|--------|
+| ローカル開発 | 5173 |
+| 本番 (Railway) | 動的（PORT環境変数） |
