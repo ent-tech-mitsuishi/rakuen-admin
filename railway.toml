@@ -2,6 +2,10 @@
 builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
+# 環境変数をビルド引数として渡す
+[build.dockerfileBuild]
+buildArgs = ["VITE_API_URL"]
+
 [deploy]
 healthcheckPath = "/health"
 healthcheckTimeout = 100
