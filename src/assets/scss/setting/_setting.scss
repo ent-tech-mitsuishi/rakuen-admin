@@ -1,0 +1,54 @@
+@charset "utf-8";
+
+// ===================================================================
+// 設定
+// ===================================================================
+
+// breakpointの数値
+$bp_sp: 767px;
+
+// photoshopのカンバスサイズ
+$vp_pc: 1280;
+$vp_sp: 750;
+
+// transition
+$transition: all 300ms;
+
+// font
+$font_base: 'Noto Sans', sans-serif;
+
+// font-weight
+$w_thin: 100;
+$w_extralight: 200;
+$w_light: 300;
+$w_regular: 400;
+$w_medium: 500;
+$w_semibold: 600;
+$w_bold: 700;
+$w_extrabold: 800;
+$w_black: 900;
+
+// color
+// ===================================================================
+// 基本 消したら動かないよ
+// ===================================================================
+$c_black: #000;
+$c_white: #fff;
+$c_darkgray: rgba(51, 51, 51, 1);
+$c_gray: rgba(102, 102, 102, 1);
+$c_lightgray: rgba(204, 204, 204, 1);
+$c_blue: rgba(73, 50, 244, 1);
+$c_green: rgba(133, 196, 88, 1);
+$c_yellow: rgba(237, 170, 82, 1);
+$c_red: rgba(219, 92, 92, 1);
+$c_bg: rgba(250, 250, 250, 1);
+$c_gold: rgba(220, 135, 0, 1);
+$c_lightpurple: rgba(233, 231, 255, 1);
+
+// selection
+$selection_color: $c_white;
+$selection_bg: $c_black;
+
+// common
+$common_font: $c_black;
+$common_bg: $c_bg;

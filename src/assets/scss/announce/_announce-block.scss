@@ -1,0 +1,61 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.announce-block {
+  &__container {
+    width: 640px;
+    padding: 18px 20px 16px;
+    & hr {
+      @include common_hr;
+    }
+  }
+  &__title {
+    @include common_h2;
+    text-align: left;
+    line-height: calc(22 / 16);
+  }
+  &__cat {
+    margin-top: 7px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+    align-items: center;
+    & > p {
+      font-size: 10px;
+      font-weight: 400;
+      color: $c_gray;
+    }
+    & > span {
+      width: fit-content;
+      height: 18px;
+      padding: 0 12px;
+      font-size: 10px;
+      color: $c_white;
+      font-weight: 700;
+      border-radius: 60px;
+      @include center;
+      &.dangan {
+        background-color: $c_red;
+      }
+    }
+  }
+
+  &__wrapper {
+    margin-top: 16px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 11px;
+    &:not(:last-child) {
+      border-bottom: solid $c_bg 2px;
+    }
+  }
+  &__txt {
+    & > p {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: calc(18 / 12);
+      color: $c_darkgray;
+    }
+  }
+}

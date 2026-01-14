@@ -1,0 +1,207 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.user-setting {
+  min-width: 790px;
+  &__form {
+    margin-top: 12px;
+  }
+
+  &__form-item {
+    margin-top: 18px;
+    &:first-child {
+      margin-top: 0;
+    }
+    & > label {
+      font-size: 12px;
+      font-weight: 400;
+      color: $c_darkgray;
+    }
+    & > input {
+      margin-top: 8px;
+      width: 100%;
+      height: 40px;
+      padding: 0px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: $c_bg;
+      @include center;
+    }
+    & > textarea {
+      margin-top: 8px;
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(249, 248, 255, 1);
+      resize: none;
+    }
+    &.dropdown {
+      position: relative;
+      width: 295px;
+      &.js--open {
+        & ul {
+          height: calc(40px * 3);
+        }
+      }
+      & > p {
+        position: relative;
+        margin-top: 8px;
+        width: 295px;
+        height: 40px;
+        padding: 0px 10px;
+        background-color: rgba(249, 248, 255, 1);
+        @include center;
+        justify-content: flex-start;
+        font-size: 14px;
+        font-weight: 400;
+        color: #999999;
+        cursor: pointer;
+        @include after {
+          background-image: url('../img/common/icon_dropdown.svg');
+          background-size: 100% 100%;
+          width: 12px;
+          height: 12px;
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+        }
+      }
+      & > ul {
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0px;
+        overflow: hidden;
+        height: 0;
+        pointer-events: none;
+        transition: $transition;
+        cursor: pointer;
+        &.js--open {
+          height: calc(40px * 3);
+          pointer-events: all;
+        }
+        & li {
+          width: 100%;
+          height: 40px;
+          padding-inline: 10px;
+          font-size: 14px;
+          background-color: $c_bg;
+          @include center;
+          justify-content: flex-start;
+          &:hover {
+            background-color: rgba(249, 248, 255, 1);
+          }
+        }
+      }
+    }
+
+    &.checkbox {
+      margin-top: 18px;
+      position: relative;
+      width: fit-content;
+      &:first-child {
+        margin-top: 0;
+      }
+      & > label {
+        padding-left: 22px;
+        font-size: 12px;
+        font-weight: 400;
+        color: $c_darkgray;
+      }
+      & input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      & span.checkmark {
+        width: 12px;
+        height: 12px;
+        background-color: #e9e7ff;
+        border-radius: 2px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        pointer-events: none;
+        @include after {
+          background-image: url('../img/common/icon_checkmark.svg');
+          background-size: 100% 100%;
+          width: 7px;
+          height: 6px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          opacity: 0;
+        }
+      }
+      & input:checked ~ .checkmark {
+        background-color: $c_blue;
+        @include after {
+          opacity: 1;
+        }
+      }
+    }
+    & .atten {
+      font-size: 10px;
+      font-weight: 400;
+      color: #999999;
+      &.ml {
+        margin-left: 5px;
+      }
+      &.mt {
+        display: block;
+        margin-top: 8px;
+      }
+    }
+    &.id {
+      pointer-events: none;
+      & input {
+        background-color: #eeeeee;
+      }
+    }
+    &.password {
+      input {
+        background-color: $c_bg;
+      }
+    }
+  }
+  &__form-group {
+    margin-top: 14px;
+    & > p {
+      font-size: 12px;
+    }
+    & .user-setting__form-item.checkbox {
+      margin-top: 0;
+    }
+  }
+  &__form-flex {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 16px;
+  }
+  &__btn {
+    margin-top: 34px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__flex {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+  }
+
+  &__button {
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
+  }
+}

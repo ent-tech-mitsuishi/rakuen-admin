@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { LoginLayout } from './layouts/LoginLayout'
 import { MainLayout } from './layouts/MainLayout'
-import { Dashboard, Home, homeLoader, NotFound } from './pages'
+import { Dashboard, Home, homeLoader, Login, NotFound } from './pages'
 
 export const router = createBrowserRouter([
   {
@@ -9,12 +11,27 @@ export const router = createBrowserRouter([
     loader: homeLoader,
   },
   {
-    path: '/admin',
-    element: <MainLayout />,
+    path: '/admin/login',
+    element: <LoginLayout />,
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: <Login />,
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <MainLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

@@ -1,0 +1,63 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.term-list {
+  &__box {
+    position: relative;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #efefef;
+    &:last-child {
+      padding-bottom: 0px;
+      border-bottom: none;
+    }
+    & .common-block__post--table th:first-of-type,
+    .common-block__post--table td:first-of-type {
+      padding-left: 32px;
+    }
+    & .common-block__post--table th:last-of-type,
+    .common-block__post--table td:last-of-type {
+      padding-right: 32px;
+    }
+    & .common-block__post--btm {
+      padding-left: 38px;
+    }
+  }
+  &__h3 {
+    margin-top: 18px;
+    margin-inline: auto;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    color: #666666;
+  }
+  &__btn {
+    margin-top: 12px;
+    @include center;
+    column-gap: 10px;
+  }
+  &__button {
+    width: 84px;
+    height: 32px;
+    font-size: 12px;
+    color: $c_blue;
+    background-color: #e9e7ff;
+    border-radius: 5px;
+    transition: $transition;
+    @include center;
+    &.btn-gray {
+      color: #666666;
+      background-color: $c_bg;
+    }
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  &__c-button {
+    width: 100px;
+    height: 26px;
+    font-size: 12px;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+  }
+}
