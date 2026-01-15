@@ -1,0 +1,35 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.user-list {
+  & .common-block__post--table th:first-of-type,
+  .common-block__post--table td:first-of-type {
+    padding-left: 28px;
+  }
+  & .common-block__post--table th:last-of-type,
+  .common-block__post--table td:last-of-type {
+    padding-right: 20px;
+  }
+  & .common-block__post--btm {
+    margin-top: 12px;
+    padding-left: 0px;
+  }
+
+  & .common-block__post--table tr td.name {
+    min-width: 50px;
+    max-width: 120px;
+    & span {
+      min-width: 50px;
+      max-width: 120px;
+    }
+  }
+
+  &__button {
+    width: 100px;
+    height: 26px;
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    font-size: 12px;
+  }
+}

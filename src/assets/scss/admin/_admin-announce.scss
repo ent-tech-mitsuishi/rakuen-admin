@@ -1,0 +1,57 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.admin-announce {
+  & .common-block__post--table td.title {
+    min-width: 390px;
+    max-width: 390px;
+    & a {
+      min-width: 370px;
+      max-width: 370px;
+    }
+  }
+  & .common-block__post--table th:first-of-type,
+  .common-block__post--table td:first-of-type {
+    padding-left: 32px;
+  }
+  & .common-block__post--table th:last-of-type,
+  .common-block__post--table td:last-of-type {
+    padding-right: 32px;
+  }
+  & .common-block__post--btm {
+    padding-left: 38px;
+  }
+
+  &__btn {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    position: absolute;
+    top: 16px;
+    right: 18px;
+  }
+
+  &__draft {
+    width: 85px;
+    height: 26px;
+    border-radius: 4px;
+    background-color: $c_bg;
+    @include center;
+    & p {
+      font-size: 8px;
+      font-weight: 400;
+      & span {
+        font-size: 12px;
+      }
+    }
+  }
+
+  &__button {
+    display: block;
+    width: 100px;
+    height: 26px;
+    font-size: 12px;
+    font-weight: 700;
+    @include center;
+  }
+}

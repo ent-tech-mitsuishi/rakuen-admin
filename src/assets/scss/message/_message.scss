@@ -1,0 +1,9 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.message {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+}

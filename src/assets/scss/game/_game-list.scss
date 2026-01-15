@@ -1,0 +1,15 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.game-list {
+  &__button {
+    display: block;
+    width: 100px;
+    height: 26px;
+    font-size: 12px;
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    @include center;
+  }
+}

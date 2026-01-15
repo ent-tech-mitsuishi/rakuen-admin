@@ -1,0 +1,28 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.campaign-list {
+  &__body {
+    width: 790px;
+    justify-self: center;
+  }
+  &__item {
+    position: relative;
+    margin-top: 20px;
+    @include bg-w;
+    width: 100%;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+  &__button {
+    display: block;
+    width: 100px;
+    height: 26px;
+    font-size: 12px;
+    position: absolute;
+    top: 18px;
+    right: 30px;
+    @include center;
+  }
+}

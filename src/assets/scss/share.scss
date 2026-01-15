@@ -1,0 +1,52 @@
+@use 'setting/base';
+// partial
+@use 'partial/nav';
+@use 'partial/common';
+@use 'partial/block';
+@use 'partial/form';
+@use 'partial/modal';
+
+// mypage
+@use 'mypage/mypage';
+@use 'mypage/mypage-profile';
+@use 'mypage/mypage-block';
+
+// view
+// @use 'mypage/mypage';
+@use 'view/view-profile';
+@use 'view/view-block';
+
+//message
+@use 'message/message';
+@use 'message/message-list';
+@use 'message/message-block';
+
+//announce
+@use 'announce/announce-list';
+@use 'announce/announce-block';
+@use 'announce/announce-create';
+
+//contact
+@use 'contact/contact-form';
+@use 'contact/contact-detail';
+
+//campaign-list
+@use 'campaign/campaign-list';
+@use 'campaign/campaign-create';
+
+//admin
+@use 'admin/admin-top';
+@use 'admin/admin-message';
+@use 'admin/admin-announce';
+
+//user
+@use 'user/user-setting';
+@use 'user/user-list';
+
+//game
+@use 'game/game-list';
+@use 'game/game-create';
+
+//term
+@use 'term/term-list';
+@use 'term/term-edit';

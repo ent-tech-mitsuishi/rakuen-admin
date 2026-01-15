@@ -1,0 +1,136 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.message-list {
+  width: 100%;
+  padding: 18px 0 0;
+  @include bg-w;
+  & h2 {
+    @include common_h2;
+  }
+  & hr {
+    @include common_hr;
+  }
+  &__container {
+    position: relative;
+    padding: 13px 0;
+    flex-shrink: 0;
+    border-right: solid $c_bg 2px;
+  }
+  &__cat {
+  }
+  &__add {
+    width: 32px;
+    height: 32px;
+    background-color: $c_lightpurple;
+    border-radius: 6px;
+    position: absolute;
+    top: 13px;
+    right: 20px;
+    & span {
+      width: 12px;
+      height: 2px;
+      background-color: $c_blue;
+      border-radius: 2px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      &:last-child {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+    }
+  }
+  &__list {
+    margin-top: 5px;
+  }
+  &__item {
+    width: 420px;
+    height: 50px;
+    padding: 20px;
+    position: relative;
+    background-color: $c_bg;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // @include after {
+    //   mask-image: url('../img/common/icon_fav.svg');
+    //   mask-size: 100% 100%;
+    //   background-color: #e9e7ff;
+    //   background-size: 100% 100%;
+    //   width: 12px;
+    //   height: 12px;
+    //   position: absolute;
+    //   top: 50%;
+    //   right: 20px;
+    //   transform: translateY(-50%);
+    //   cursor: pointer;
+    //   &:hover {
+    //     background-color: #4932f4;
+    //   }
+    // }
+    &.js-fav {
+      & .fav {
+        background-color: #4932f4;
+      }
+    }
+    &.new {
+      @include before {
+        background-color: $c_red;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        position: absolute;
+        top: 7px;
+        left: 7px;
+      }
+    }
+    &:nth-child(2n + 1) {
+      background-color: $c_white;
+    }
+    &:hover,
+    &.js-active {
+      background-color: rgba(249, 248, 255, 1);
+    }
+    & > img {
+      width: 30px;
+    }
+    & > p {
+      margin-left: 7px;
+      font-size: 12px;
+      font-weight: 400;
+      color: $c_darkgray;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      max-width: 322px;
+    }
+    & .date {
+      font-size: 8px;
+      font-weight: 400;
+      color: $c_gray;
+      position: absolute;
+      top: 3px;
+      right: 20px;
+    }
+    & .fav {
+      width: 12px;
+      height: 12px;
+      mask-image: url('../img/common/icon_fav.svg');
+      mask-size: 100% 100%;
+      background-color: #e9e7ff;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      &:hover {
+        background-color: #4932f4;
+      }
+    }
+  }
+}

@@ -1,0 +1,143 @@
+@use '../setting/setting' as *;
+@use '../setting/mixin' as *;
+
+.admin-message {
+  &__dropdown {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 6px;
+    .common__dropdown {
+      margin-left: 0;
+    }
+  }
+  &__form {
+    margin-top: 12px;
+  }
+  &__flex {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    & .admin-message__form-item {
+      margin-top: 0;
+    }
+  }
+  &__form-item {
+    margin-top: 18px;
+    &:first-child {
+      margin-top: 0;
+    }
+    & > label {
+      font-size: 12px;
+      font-weight: 400;
+      color: $c_darkgray;
+    }
+    & > input {
+      margin-top: 8px;
+      width: 100%;
+      height: 40px;
+      padding: 0px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(249, 248, 255, 1);
+      @include center;
+    }
+    & > textarea {
+      margin-top: 8px;
+      width: 100%;
+      height: 120px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      background-color: rgba(249, 248, 255, 1);
+      resize: none;
+    }
+    &.disabled {
+      opacity: 0.25;
+      pointer-events: none;
+    }
+    &.dropdown {
+      position: relative;
+      margin-left: 0;
+      width: fit-content;
+      height: fit-content;
+      background-color: transparent;
+      flex-direction: column;
+      align-items: start;
+      @include after {
+        display: none;
+      }
+      &.js--open {
+        & ul {
+          height: calc(40px * 3);
+          pointer-events: all;
+        }
+      }
+      & > p {
+        position: relative;
+        margin-top: 8px;
+        width: 295px;
+        min-height: 40px;
+        padding: 0px 10px;
+        background-color: rgba(249, 248, 255, 1);
+        @include center;
+        justify-content: flex-start;
+        font-size: 14px;
+        font-weight: 400;
+        color: #999999;
+        cursor: pointer;
+        @include after {
+          background-image: url('../img/common/icon_dropdown.svg');
+          background-size: 100% 100%;
+          width: 12px;
+          height: 12px;
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+        }
+      }
+      & > ul {
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0px;
+        overflow: hidden;
+        height: 0;
+        pointer-events: none;
+        transition: $transition;
+        cursor: pointer;
+        &.js--open {
+          height: calc(40px * 3);
+          pointer-events: all;
+        }
+        & li {
+          width: 100%;
+          height: 40px;
+          padding-inline: 10px;
+          font-size: 14px;
+          background-color: $c_bg;
+          @include center;
+          justify-content: flex-start;
+          &:hover {
+            background-color: rgba(249, 248, 255, 1);
+          }
+        }
+      }
+    }
+  }
+  &__btn {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+  }
+
+  &__button {
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
