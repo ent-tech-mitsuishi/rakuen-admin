@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LoginForm } from '../components/LoginForm'
 
 export function Login() {
   const navigate = useNavigate()
@@ -49,63 +50,16 @@ export function Login() {
   }
 
   return (
-    <div className="common__login">
-      <div className="common__title">
-        <h2 className="common__h2">管理者ログイン</h2>
-      </div>
-      <div className="common__body">
-        <div className="common__form">
-          <form onSubmit={handleSubmit}>
-            {error && (
-              <div className="common__form--error" style={{ color: '#dc2626', marginBottom: '1rem', textAlign: 'center' }}>
-                {error}
-              </div>
-            )}
-            <div className="common__form--item">
-              <div className="common__form--content">
-                <input
-                  type="text"
-                  name="username"
-                  placeholder="ユーザー名"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            <div className="common__form--item">
-              <div className="common__form--content">
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="パスワード"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  disabled={isLoading}
-                />
-              </div>
-            </div>
-            <div className="common__form--item common__form--item-accept">
-              <div className="common__form--content">
-                <input
-                  type="checkbox"
-                  id="accept"
-                  name="accept"
-                  checked={remember}
-                  onChange={(e) => setRemember(e.target.checked)}
-                  disabled={isLoading}
-                />
-                <label htmlFor="accept">ログイン情報を保存する</label>
-              </div>
-            </div>
-            <div className="common__form--item">
-              <button type="submit" className="common__form--button" disabled={isLoading}>
-                {isLoading ? 'ログイン中...' : 'ログイン'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <LoginForm
+      username={username}
+      password={password}
+      remember={remember}
+      error={error}
+      isLoading={isLoading}
+      onUsernameChange={setUsername}
+      onPasswordChange={setPassword}
+      onRememberChange={setRemember}
+      onSubmit={handleSubmit}
+    />
   )
 }
