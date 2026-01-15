@@ -52,6 +52,232 @@ src/
 - Storyファイル: `*.stories.tsx`
 - ページ: `pages/` 配下に配置
 
+## コンポーネント作成ルール
+
+### フォルダ構造
+
+各コンポーネントは個別のフォルダに配置する。
+
+```
+src/components/
+├── Button/
+│   ├── Button.tsx          # コンポーネント本体
+│   ├── Button.stories.tsx  # Storybookストーリー
+│   └── index.tsx           # エクスポート用
+├── LoginForm/
+│   ├── LoginForm.tsx
+│   ├── LoginForm.stories.tsx
+│   └── index.tsx
+└── ...
+```
+
+### ファイル構成
+
+#### 1. コンポーネント本体（例: `Button.tsx`）
+
+```tsx
+export interface ButtonProps {
+  variant?: 'primary' | 'secondary' | 'danger'
+  size?: 'sm' | 'md' | 'lg'
+  children: React.ReactNode
+}
+
+export function Button({ variant = 'primary', size = 'md', children }: ButtonProps) {
+  return <button className={`button button--${variant} button--${size}`}>{children}</button>
+}
+```
+
+**ポイント:**
+- Propsの型を`export`する
+- 関数コンポーネントは`function`宣言を使用
+- デフォルト値は引数のデストラクチャリングで設定
+
+#### 2. index.tsx（エクスポート用）
+
+```tsx
+export { Button } from './Button'
+export type { ButtonProps } from './Button'
+```
+
+**ポイント:**
+- コンポーネントと型の両方をエクスポート
+- これにより `import { Button } from '@/components/Button'` のようにインポート可能
+
+### コンポーネント設計原則
+
+#### コンテナ/プレゼンテーション分離パターン
+
+コンポーネントは以下の2つに分離する：
+
+**1. プレゼンテーションコンポーネント（componentsフォルダ）**
+- UIの見た目のみを担当
+- ビジネスロジックを持たない
+- propsで全ての値とハンドラーを受け取る
+- 再利用可能
+
+```tsx
+// components/LoginForm/LoginForm.tsx
+export interface LoginFormProps {
+  username: string
+  password: string
+  error?: string
+  onUsernameChange: (value: string) => void
+  onPasswordChange: (value: string) => void
+  onSubmit: (e: React.FormEvent) => void
+}
+
+export function LoginForm({ username, password, error, onUsernameChange, onPasswordChange, onSubmit }: LoginFormProps) {
+  return (
+    <form onSubmit={onSubmit}>
+      <input value={username} onChange={(e) => onUsernameChange(e.target.value)} />
+      <input value={password} onChange={(e) => onPasswordChange(e.target.value)} type="password" />
+      {error && <div>{error}</div>}
+      <button type="submit">ログイン</button>
+    </form>
+  )
+}
+```
+
+**2. コンテナコンポーネント（pagesフォルダ）**
+- ビジネスロジックを担当
+- 状態管理（useState, useReducerなど）
+- API呼び出し
+- プレゼンテーションコンポーネントを使用
+
+```tsx
+// pages/Login.tsx
+export function Login() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    // ビジネスロジック
+  }
+
+  return (
+    <LoginForm
+      username={username}
+      password={password}
+      error={error}
+      onUsernameChange={setUsername}
+      onPasswordChange={setPassword}
+      onSubmit={handleSubmit}
+    />
+  )
+}
+```
+
+**メリット:**
+- テスト容易性の向上
+- 再利用性の向上
+- Storybookで様々な状態を簡単にテスト可能
+- 責任の明確化
+
+## Storybook
+
+### Storybookの使い方
+
+コンポーネントを作成したら、必ずStorybookストーリーを追加する。
+
+#### ストーリーファイルの作成
+
+ファイル名: `{コンポーネント名}.stories.tsx`
+
+```tsx
+// Button.stories.tsx
+import type { Meta, StoryObj } from '@storybook/react'
+import { Button } from './Button'
+
+const meta = {
+  title: 'Components/Button',  // Storybookでの表示パス
+  component: Button,
+  parameters: {
+    layout: 'centered',  // コンポーネントを中央配置
+  },
+  tags: ['autodocs'],  // 自動ドキュメント生成
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'danger'],
+      description: 'ボタンの種類',
+    },
+  },
+} satisfies Meta<typeof Button>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+// 各ストーリーを定義
+export const Primary: Story = {
+  args: {
+    variant: 'primary',
+    children: 'ボタン',
+  },
+}
+
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    children: 'ボタン',
+  },
+}
+```
+
+### イベントハンドラーのモック
+
+フォームやボタンなど、イベントハンドラーを持つコンポーネントの場合：
+
+```tsx
+import { fn } from '@storybook/test'
+
+const meta = {
+  title: 'Components/LoginForm',
+  component: LoginForm,
+  args: {
+    onUsernameChange: fn(),  // モック関数
+    onPasswordChange: fn(),
+    onSubmit: fn(),
+  },
+} satisfies Meta<typeof LoginForm>
+
+export const Default: Story = {
+  args: {
+    username: '',
+    password: '',
+  },
+}
+
+export const WithError: Story = {
+  args: {
+    username: 'admin',
+    password: 'wrong',
+    error: 'ログインに失敗しました',
+  },
+}
+```
+
+### Storybookコマンド
+
+```bash
+# Storybook起動
+npm run storybook
+
+# Storybookビルド
+npm run build-storybook
+```
+
+### Storybookでテストすべき状態
+
+コンポーネントごとに以下の状態をストーリーで作成する：
+
+1. **Default**: 初期状態
+2. **WithValues**: 値が入力された状態
+3. **WithError**: エラー表示状態
+4. **Loading**: ローディング状態（該当する場合）
+5. **Disabled**: 無効化状態（該当する場合）
+
 ## デプロイ設定
 
 ### 本番環境
